@@ -1,0 +1,38 @@
+'use strict';
+
+var gulp = require('gulp');
+var symlink = require('gulp-sym');
+var serveStatic = require('serve-static');
+var serveIndex = require('serve-index');
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Configuration
+///////////////////////////////////////////////////////////////////////////////////////
+var PORT = 9001;           
+var SOURCE_DIRECTORY = 'js';
+var WEB_DIRECTORY = 'web';
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Development tasks
+///////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Start the development server.
+ */
+gulp.task('develop', [], function(callback)
+{
+    var serveStatic = require('serve-static');
+    var serveIndex = require('serve-index');
+    var app = require('connect')()
+        .use(serveStatic(WEB_DIRECTORY))
+        .use(serveIndex(WEB_DIRECTORY));
+    require('http').createServer(app).listen(PORT);
+});
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Master tasks
+///////////////////////////////////////////////////////////////////////////////////////
+gulp.task('default', function(callback)
+{
+    gulp.start('develop');
+    callback();
+});
